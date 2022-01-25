@@ -98,3 +98,51 @@ function viewAllRoles(){
         start();
     });
 }
+
+function viewAllDepartments(){
+    const sql = 
+    "SELECT * FROM department";
+    connection.query(sql, (err, res) => {
+        if(err) throw err;
+        console.table(res);
+        start();
+    });
+}
+
+function addEmployee(){
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "first_name",
+            message: "What is the new employee's first name?"
+        },
+        {
+            type: "input",
+            name: "last_name",
+            message: "What is the new employee's last name?"
+        },
+        {
+            type: "input",
+            name: "manager_id",
+            message: "Who is the new employee's manager? Enter the manager's ID",
+        },
+        {
+            type: "input",
+            name: "role_id",
+            message: "What is the new employee's role? Enter the role ID",
+        },
+    ])
+    .then(answers => {
+
+        connection.query("INSERT INTO employee SET ? ",
+            {
+                first_name: answers.first_name,
+                last_name: answers.last_name,
+                manager_id: answers.manager_id,
+                role_id: answers.role_id
+            }, (err, res) => {
+            if(err) throw err;
+            start();
+        });
+    })
+}
