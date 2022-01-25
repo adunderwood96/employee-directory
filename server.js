@@ -275,3 +275,94 @@ function viewEmployeeByManager(){
         })
     })
 }
+
+function deleteEmployee(){
+    connection.query("SELECT * FROM employee", (err,res) => {
+        if(err) throw err;
+
+        var employeeList = [];
+        res.forEach(employee => {employeeList.push(employee.id + ": " + employee.first_name + " " + employee.last_name)});
+
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "employee",
+                message: "Which employee would you like to remove?",
+                choices: employeeList
+            }
+        ])
+        .then(answers => {
+            connection.query("DELETE FROM employee WHERE ?",
+            [ 
+                {
+                    id: answers.employee[0],
+                }
+            ],
+            (err,res) => {
+                if (err) throw err;
+                start();
+            });
+        })
+    })
+}
+
+function deleteRole(){
+    connection.query("SELECT * FROM role", (err,res) => {
+        if(err) throw err;
+
+        var roleList = [];
+        res.forEach(role => {roleList.push(role.id + ": " + role.title)});
+
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "role",
+                message: "Which employee would you like to remove?",
+                choices: roleList
+            }
+        ])
+        .then(answers => {
+            connection.query("DELETE FROM role WHERE ?",
+            [ 
+                {
+                    id: answers.role[0],
+                }
+            ],
+            (err,res) => {
+                if (err) throw err;
+                start();
+            });
+        })
+    })
+}
+
+function deleteDepartment(){
+    connection.query("SELECT * FROM department", (err,res) => {
+        if(err) throw err;
+
+        var departmentList = [];
+        res.forEach(department => {departmentList.push(department.id + ": " + department.name)});
+
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "department",
+                message: "Which employee would you like to remove?",
+                choices: departmentList
+            }
+        ])
+        .then(answers => {
+            connection.query("DELETE FROM department WHERE ?",
+            [ 
+                {
+                    id: answers.department[0],
+                }
+            ],
+            (err,res) => {
+                if (err) throw err;
+                start();
+            });
+        })
+    })
+}
+
