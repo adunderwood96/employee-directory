@@ -202,3 +202,76 @@ function addDepartment(){
 
     
 }
+
+function updateEmployeeManager(){
+    connection.query("SELECT id, first_name, last_name, manager_id FROM employee", (err,res) => {
+        if(err) throw err;
+
+        var employeeList = [];
+        res.forEach(employee => {employeeList.push(employee.id + ": " + employee.first_name + " " + employee.last_name)});
+
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "employee",
+                message: "Which employee would you like to change manager?",
+                choices: employeeList
+            },
+            {
+                type: "list",
+                name: "manager",
+                message: "Which manager would you like to change the employee to?",
+                choices: employeeList
+            }
+
+        ])
+        .then(answers => {
+
+
+            connection.query("UPDATE employee SET ? WHERE ?",
+            [ 
+                {
+                    manager_id: answers.manager[0],
+                },
+                {
+                    id: answers.employee[0],
+                }
+            ],
+            (err,res) => {
+                if (err) throw err;
+                start();
+            });
+        })
+    })
+}
+
+function viewEmployeeByManager(){
+    connection.query("SELECT * FROM employee", (err,res) => {
+        if(err) throw err;
+
+        var managerList = [];
+        res.forEach(employee => {managerList.push(employee.id + ": " + employee.first_name + " " + employee.last_name)});
+        
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "manager",
+                message: "Which manager would you like to view their employees?",
+                choices: managerList
+            }
+        ])
+        .then(answers => {
+            connection.query("SELECT * FROM employee WHERE ?",
+             
+                {
+                    manager_id: parseInt(answers.manager[0])
+                }
+            ,
+            (err,res) => {
+                if (err) throw err;
+                console.table(res);
+                start();
+            });
+        })
+    })
+}
