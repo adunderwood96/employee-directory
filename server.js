@@ -72,3 +72,29 @@ function start(){
             }
         })
 }
+
+function viewAllEmployees(){
+    const sql = 
+    "SELECT emp.id AS EmployeeID, concat(emp.first_name, ' ', emp.last_name) AS EmployeeName, role.title AS RoleTitle, role.salary AS Salary, department.name AS DepartmentName, concat(manager.first_name, ' ', manager.last_name) AS ManagerName FROM employee AS emp " + 
+    "LEFT JOIN employee_db.employee AS manager ON emp.manager_id=manager.id " +
+    "LEFT JOIN role ON emp.role_id=role.id " +
+    "LEFT JOIN department ON department.id=role.department_id ";
+
+    connection.query(sql, (err, res) => {
+        if(err) throw err;
+        console.table(res);
+        start();
+    });
+}
+
+function viewAllRoles(){
+    const sql = 
+    "SELECT title as RoleTitle, salary as Salary, department.name as DepartmentName FROM role " +
+    "LEFT JOIN department ON role.department_id=department.id";
+
+    connection.query(sql, (err, res) => {
+        if(err) throw err;
+        console.table(res);
+        start();
+    });
+}
