@@ -25,7 +25,7 @@ npm i inquirer mysql2 console.table dotenv asciiart-logo@0.2.5
 
 ## Usage
 
-to start project use node server.js, once in the terminal and the list show they can use the "arrow" keys. If a user would like to add a new role under a new department, make sure to add the new department first, then role, then employee for a smoother transition.
+to start the project use node server.js, once in the terminal and the list show they can use the "arrow" keys. If a user would like to add a new role under a new department, make sure to add the new department first, then role, then employee for a smoother transition.
 
 ## Contributions
 
