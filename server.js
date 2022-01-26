@@ -86,7 +86,7 @@ function start() {
 // A query which returns all data for all employees of the database
 function viewAllEmployees() {
     const sql =
-        "SELECT emp.id AS EmployeeID, concat(emp.first_name, ' ', emp.last_name) AS EmployeeName, role.title AS RoleTitle, role.salary AS Salary, department.name AS DepartmentName, concat(manager.first_name, ' ', manager.last_name) AS ManagerName FROM employee AS emp " +
+        "SELECT emp.id AS Employee_ID, concat(emp.first_name, ' ', emp.last_name) AS Employee, role.title AS Role, role.salary AS Salary, department.name AS Department, concat(manager.first_name, ' ', manager.last_name) AS Manager FROM employee AS emp " +
         "LEFT JOIN employee_db.employee AS manager ON emp.manager_id=manager.id " +
         "LEFT JOIN role ON emp.role_id=role.id " +
         "LEFT JOIN department ON department.id=role.department_id ";
@@ -101,7 +101,7 @@ function viewAllEmployees() {
 // A query which returns all data for all roles of the database
 function viewAllRoles() {
     const sql =
-        "SELECT title as RoleTitle, salary as Salary, department.name as DepartmentName FROM role " +
+        "SELECT title as Role, salary as Salary, department.name as Department FROM role " +
         "LEFT JOIN department ON role.department_id=department.id";
 
     connection.query(sql, (err, res) => {
@@ -177,7 +177,7 @@ function addRole() {
         {
             type: "input",
             name: "department_id",
-            message: "What is the new role's department? Enter the department's ID. If the department is new, please add the new department first before adding in the new role.",
+            message: "What is the new role's department? Enter the department's ID.",
         }
     ])
         .then(answers => {
