@@ -1,4 +1,5 @@
 const inquirer = require("inquirer");
+const connection = require('./db/connection.js');
 
 // Functions to display the logo and start the application
 // TODO: ADD IN LOGO
@@ -411,5 +412,7 @@ function utilizedBudget() {
     })
 }
 
-// TODO: CONNECT
-
+connection.connect((err) => {
+    if (err) throw err;
+    start();
+});
