@@ -1,10 +1,10 @@
 {
   "dependencies": {
+    "asciiart-logo": "^0.2.5",
     "console.table": "^0.10.0",
     "dotenv": "^14.3.0",
     "inquirer": "^8.2.0",
-    "mysql2": "^2.3.3",
-    "sequelize": "^6.14.1"
+    "mysql2": "^2.3.3"
   },
   "scripts": {
     "start": "node server.js"
@@ -23,5 +23,6 @@
   "bugs": {
     "url": "https://github.com/adunderwood96/employee-directory/issues"
   },
-  "homepage": "https://github.com/adunderwood96/employee-directory#readme"
+  "homepage": "https://github.com/adunderwood96/employee-directory#readme",
+  "devDependencies": {}
 }

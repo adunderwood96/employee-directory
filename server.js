@@ -1,8 +1,11 @@
+// required packages
 const inquirer = require("inquirer");
 const connection = require('./db/connection.js');
+const logo = require("asciiart-logo");
+require("console.table");
 
 // Functions to display the logo and start the application
-// TODO: ADD IN LOGO
+logoArt();
 
 // Function to start tracking.
 // Prompts user to select an action and then executes the appropriate function for that action.
@@ -32,7 +35,6 @@ function start() {
         }).then(answer => {
 
             // Switch case is used to execute the appropriate function based on the users selection
-
             switch (answer.choice) {
                 case "View All Employees":
                     viewAllEmployees();
@@ -97,7 +99,6 @@ function viewAllEmployees() {
 }
 
 // A query which returns all data for all roles of the database
-
 function viewAllRoles() {
     const sql =
         "SELECT title as RoleTitle, salary as Salary, department.name as DepartmentName FROM role " +
@@ -137,12 +138,12 @@ function addEmployee() {
         {
             type: "input",
             name: "manager_id",
-            message: "Who is the new employee's manager? Enter the manager's ID",
+            message: "Who is the new employee's manager? Enter the manager's ID.",
         },
         {
             type: "input",
             name: "role_id",
-            message: "What is the new employee's role? Enter their role ID",
+            message: "What is the new employee's role? Enter their role ID.",
         },
     ])
         .then(answers => {
@@ -160,6 +161,7 @@ function addEmployee() {
         })
 }
 
+// Function to create a new role
 function addRole() {
     inquirer.prompt([
         {
@@ -175,7 +177,7 @@ function addRole() {
         {
             type: "input",
             name: "department_id",
-            message: "Who is the new role's department? Enter the department's ID",
+            message: "What is the new role's department? Enter the department's ID. If the department is new, please add the new department first before adding in the new role.",
         }
     ])
         .then(answers => {
@@ -194,6 +196,7 @@ function addRole() {
 
 }
 
+// Function to create a new department
 function addDepartment() {
     inquirer.prompt([
         {
@@ -216,6 +219,7 @@ function addDepartment() {
 
 }
 
+// function to update employee's manager
 function updateEmployeeManager() {
     connection.query("SELECT id, first_name, last_name, manager_id FROM employee", (err, res) => {
         if (err) throw err;
@@ -227,7 +231,7 @@ function updateEmployeeManager() {
             {
                 type: "list",
                 name: "employee",
-                message: "Which employee would you like to change manager?",
+                message: "Which employee would you like to change the manager for?",
                 choices: employeeList
             },
             {
@@ -258,6 +262,7 @@ function updateEmployeeManager() {
     })
 }
 
+// view employee by manager
 function viewEmployeeByManager() {
     connection.query("SELECT * FROM employee", (err, res) => {
         if (err) throw err;
@@ -269,7 +274,7 @@ function viewEmployeeByManager() {
             {
                 type: "list",
                 name: "manager",
-                message: "Which manager would you like to view their employees?",
+                message: "Which manager's employees would you like to review?",
                 choices: managerList
             }
         ])
@@ -289,6 +294,7 @@ function viewEmployeeByManager() {
     })
 }
 
+// delete employee
 function deleteEmployee() {
     connection.query("SELECT * FROM employee", (err, res) => {
         if (err) throw err;
@@ -319,6 +325,7 @@ function deleteEmployee() {
     })
 }
 
+// delete role
 function deleteRole() {
     connection.query("SELECT * FROM role", (err, res) => {
         if (err) throw err;
@@ -349,6 +356,7 @@ function deleteRole() {
     })
 }
 
+// delete department
 function deleteDepartment() {
     connection.query("SELECT * FROM department", (err, res) => {
         if (err) throw err;
@@ -412,7 +420,25 @@ function utilizedBudget() {
     })
 }
 
+
 connection.connect((err) => {
     if (err) throw err;
     start();
 });
+
+//  Function to create opening logo
+function logoArt() {
+    console.log(
+        logo({
+            name: "Employee Directory",
+            font: "Standard",
+            lineChars: 20,
+            padding: 5,
+            margin: 5,
+            borderColor: "grey",
+            logoColor: "bold-blue",
+            textColor: "grey",
+        })
+            .render()
+    );
+}
