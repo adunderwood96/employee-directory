@@ -2,7 +2,6 @@
 const inquirer = require("inquirer");
 const connection = require('./db/connection.js');
 const logo = require("asciiart-logo");
-require("console.table");
 
 // Functions to display the logo and start the application
 logoArt();
@@ -217,6 +216,52 @@ function addDepartment() {
         })
 
 
+}
+
+// Update Employee Role
+function updateEmployeeRole(){
+    connection.query("SELECT employee.id, first_name, last_name, title, role_id FROM employee JOIN role ON role_id=role.id", (err,res) => {
+        if(err) throw err;
+
+        var employeeList = [];
+        res.forEach(employee => {employeeList.push(employee.id + ": " + employee.first_name + " " + employee.last_name)});
+
+        var roleChoices = [];
+        res.forEach(role => {roleChoices.push(role.role_id + ": " + role.title)});
+
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "employee",
+                message: "Which employee would you like to change roles?",
+                choices: employeeList
+            },
+            {
+                type: "list",
+                name: "role",
+                message: "Which role would you like to change the employee to?",
+                choices: roleChoices
+            }
+
+        ])
+        .then(answers => {
+
+
+            connection.query("UPDATE employee SET ? WHERE ?",
+            [ 
+                {
+                    role_id: answers.role[0],
+                },
+                {
+                    id: answers.employee[0],
+                }
+            ],
+            (err,res) => {
+                if (err) throw err;
+                start();
+            });
+        })
+    })
 }
 
 // function to update employee's manager
