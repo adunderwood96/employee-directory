@@ -13,16 +13,17 @@
 
 ## Description
 
-Using mysql and inquirer through the terminal, the user can view a database of employees and manage their roles, departments, and budget.
+Using mysql and inquirer through the terminal, the user can view a database of employees, managers, roles, and departments. The command line interface also allows the user to  manage the roles, employees, managers, departments, and budget through adding, updating and deleting.
 
 ## Demo 
 
 ### YouTube:
 
+https://youtu.be/OR4SdqzGWr8
 
 ### ScreenCastify: 
 
-
+https://watch.screencastify.com/v/JEKyd1ptfHFxUeg1oWFO
 
 ## Install
 
